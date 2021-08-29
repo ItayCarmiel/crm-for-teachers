@@ -1,22 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Login from './components/login';
+import Footer from './components/footer';
 function App() {
   return (
-    <div className="App">
-      <div className="description">
-        <d1>
-          Private teachers? <br />
-          Search for them?  <br />
-          Sign up now!
-        </d1>
-        
-      </div>
-      <div className="login">
-
-      </div>
-    </div>
+<div>
+    <Login />
+    <Footer mail = "itaycar875@gmail.com"/>
+  </div>
   );
 }
-
 export default App;
