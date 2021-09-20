@@ -1,0 +1,17 @@
+{
+  "name": "auth-api-express",
+  "version": "1.0.0",
+  "description": "Web application with server-side rendering (SSR) dynamic templates using Jade. ## Getting Started ### Install *yarn* (If Not Installed Already)  npm i -g yarn ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.12"
+  }
+}
