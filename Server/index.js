@@ -45,12 +45,26 @@ app.post('/signUp', function(req, res) {
                     res.status(400).json({status:"Something went wrong"});
                 }
                 else{
-                    res.status(200).json({status:"Success! You can now LogIn",flag:true})
+                    res.status(200).json({status:"Success! You can now Login",flag:true})
                 }
             });
         }
     });
     
+});
+
+app.post('/login', function(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+    con.query(`SELECT * FROM Accounts WHERE Email='${email}' AND Password='${password}'`,function(err, result){
+        if (err) {
+            res.status(400).json({status:"Something went wrong"});
+        } else if(result.length > 0){
+            res.status(200).json({status: "Success!", id: result, flag:true});
+        } else {
+            res.status(200).json({status:"Wrong Mail or Password", flag: false});
+        }
+    });
 });
  
 

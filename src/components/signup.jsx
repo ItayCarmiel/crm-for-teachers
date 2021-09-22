@@ -8,8 +8,7 @@ const SignUp = (props) => {
   const [password, setPassword] = useState("")
   const [fullName, setFullname] = useState("")
   const [phone, setPhone] = useState("")
-  const [msg, setMsg] = useState("")
-  const [open, setOpen] = useState(false);  
+  const [signMsg, setSignMsg] = useState("")
 
   const handleSubmit =()=> {
     axios.post('http://localhost:8004/signUp', {
@@ -18,7 +17,7 @@ const SignUp = (props) => {
         email:email,
         phone:phone
     }).then(response=> {
-        props.updateMsg(response.data.status);
+        props.updateSignMsg(response.data.status);
         if(response.data.flag){
           props.handleClose();
         }
@@ -31,7 +30,7 @@ const SignUp = (props) => {
 			<div >
 				<h1>First time?</h1>
 				<p>Enter your personal details and start your journey with us for free</p>
-				{msg}
+				{signMsg}
         <input type="fullname" placeholder="FullName" onChange= {e=>{setFullname(e.target.value)}} />
         <input type="password" placeholder="Password" onChange= {e=>setPassword(e.target.value)} />
         <input type="email" placeholder="Email" onChange= {e=>setEmail(e.target.value)} />

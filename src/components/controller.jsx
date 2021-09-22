@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import SignUp from './signup'
+import SignUp from './signup';
 import Login from './login';
+import Footer from './footer';
 
-import axios from 'axios'
 //test
 const Controller=()=>
 {
  
 	const [open, setOpen] = useState(true);
-    const [msg, setMsg] = useState("");
+    const [logMsg, setLogMsg] = useState("");
+    const [signMsg, setSignMsg] = useState("");
     
     const handleOpen = () => {
         setOpen(!open);
@@ -18,15 +19,21 @@ const Controller=()=>
 
     return(
     <div >
-        {open && <Login handleClose={handleOpen}/>}
+        <div className="head">
+        <header>Peacher</header>
+        <second>You're personal teacher for private lessons</second>
+      </div>
+        {open && <Login updateLogMsg = {(e)=> setLogMsg(e)} handleClose={handleOpen}/>}
+        {logMsg}
         {!open && <button onClick={handleOpen}>
             LogIn
         </button>}
-        {!open && <SignUp updateMsg = {(e)=> setMsg(e)} handleClose={handleOpen} />}
-        {msg}
+        {!open && <SignUp updateSignMsg = {(e)=> setSignMsg(e)} handleClose={handleOpen} />}
+        {signMsg}
         {open && <button onClick={handleOpen}>
             SignUp
         </button>}
+        <Footer mail = "itaycar875@gmail.com"/>
     </div>
 
 )}

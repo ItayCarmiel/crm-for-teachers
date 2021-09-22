@@ -1,14 +1,36 @@
 import './App.css';
-import Login from './components/login';
-import Footer from './components/footer';
 import Controller from './components/controller';
+import Home from './components/home';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 
 function App() {
   return (
 <div>
-    <Controller />
-    <Footer mail = "itaycar875@gmail.com"/>
+    {/* <Controller /> */}
+    <Router>
+    <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                    return (
+                      //this.state.isUserAuthenticated ?
+                      <Redirect to="/login" /> 
+                      //<Redirect to="/test1" /> 
+                    )
+                }}
+              />
+               <Route exact path="/login" component={Controller} />
+               <Route exact path="/home" component={Home} />
+            </Switch>
+     </Router>
   </div>
+  
   );
 }
 export default App;
