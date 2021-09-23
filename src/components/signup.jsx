@@ -27,9 +27,7 @@ const SignUp = (props) => {
 
   return (
   
-			<div >
-				<h1>First time?</h1>
-				<p>Enter your personal details and start your journey with us for free</p>
+			<div className="signform">
 				{signMsg}
         <input type="fullname" placeholder="FullName" onChange= {e=>{setFullname(e.target.value)}} />
         <input type="password" placeholder="Password" onChange= {e=>setPassword(e.target.value)} />

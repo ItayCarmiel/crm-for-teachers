@@ -23,16 +23,25 @@ const Controller=()=>
         <header>Peacher</header>
         <second>You're personal teacher for private lessons</second>
       </div>
+      <div className="logPage">
+          <div className="login">
+          <p><span>Login</span></p>
         {open && <Login updateLogMsg = {(e)=> setLogMsg(e)} handleClose={handleOpen}/>}
-        {logMsg}
         {!open && <button onClick={handleOpen}>
             LogIn
         </button>}
+        <message><br/>{logMsg}</message>
+        </div>
+        <div className="signUp">
+        <p><span>First time? </span><span>
+        Enter your personal details </span><span> And start your journey with us</span></p>
         {!open && <SignUp updateSignMsg = {(e)=> setSignMsg(e)} handleClose={handleOpen} />}
-        {signMsg}
         {open && <button onClick={handleOpen}>
-            SignUp
+            Sign Up
         </button>}
+        <message><br/>{signMsg}</message>
+        </div>
+    </div>
         <Footer mail = "itaycar875@gmail.com"/>
     </div>
 

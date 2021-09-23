@@ -36,7 +36,10 @@ app.post('/signUp', function(req, res) {
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
-        if(result.length > 0){ // there is an email like this
+        else if(email.length < 1 || password.length < 1 || fullName.length < 1 || phone.length < 1 ){
+            res.status(200).json({status:"You must fill all fields",flag:false});
+        }
+        else if(result.length > 0){ // there is an email like this
             res.json({status:"Mail already exist",flag:false});
         }
         else {
@@ -56,13 +59,17 @@ app.post('/signUp', function(req, res) {
 app.post('/login', function(req, res) {
     const email = req.body.email;
     const password = req.body.password;
+    
     con.query(`SELECT * FROM Accounts WHERE Email='${email}' AND Password='${password}'`,function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
+        }
+        else if(email.length < 1 || password.length < 1){
+            res.status(200).json({status:"You must fill both fields", flag: false});
         } else if(result.length > 0){
             res.status(200).json({status: "Success!", id: result, flag:true});
         } else {
-            res.status(200).json({status:"Wrong Mail or Password", flag: false});
+            res.status(200).json({status:"Wrong Mail or Password!", flag: false});
         }
     });
 });

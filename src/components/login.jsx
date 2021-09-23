@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
+import { useHistory } from "react-router-dom";	
 
 import axios from 'axios'
 
@@ -10,6 +11,7 @@ const Login=(props)=>
 	const [logMsg, setLogMsg] = useState("")
 	const [openHome, setOpenHome] = useState(false);
 	const [name, setName] = useState("");
+	let history = useHistory();
 
 
 		useEffect(() => {
@@ -18,6 +20,7 @@ const Login=(props)=>
 			}
 			console.log(name);
 			setOpenHome(true);
+			history.push("/login");
 		  }, [name]);
   
 	const handleLogin =()=> {
@@ -34,13 +37,10 @@ const Login=(props)=>
 	  }
 	
     return(
-<div >
-	<div>
+<div className="logform">
 		<inForm action="#">
-			<h1>Sign in</h1>
 			<input type="email" placeholder="Email" onChange= {e=>setEmail(e.target.value)} />
 			<input type="password" placeholder="Password" onChange= {e=>setPassword(e.target.value)} />
-			<a href="#">Forgot your password?</a>
 			<button onClick={handleLogin}>
 			Sign In
 			</button>
@@ -50,7 +50,6 @@ const Login=(props)=>
             pathname: '/home',
             name: name
         }}/>}
-	</div>
 </div>
 
 )}

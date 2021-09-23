@@ -21,7 +21,6 @@ function App() {
                     return (
                       //this.state.isUserAuthenticated ?
                       <Redirect to="/login" /> 
-                      //<Redirect to="/test1" /> 
                     )
                 }}
               />
