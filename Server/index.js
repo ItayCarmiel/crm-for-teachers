@@ -32,7 +32,7 @@ app.post('/signUp', function(req, res) {
     const password = req.body.password;
     const email = req.body.email;
     const phone = req.body.phone;
-    con.query(`SELECT ID FROM teachers WHERE Email='${email}'`,function(err, result){
+con.query(`SELECT ID FROM teachers WHERE Email='${email}'`,function(err, result){
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
@@ -85,7 +85,6 @@ app.post('/schedule', function(req, res) {
     });
 });
  
-
 
 app.listen(8004, () => {
   console.log(`Server running at http://localhost:8004/`);
