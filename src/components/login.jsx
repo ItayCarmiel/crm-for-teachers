@@ -10,18 +10,17 @@ const Login=(props)=>
     const [password, setPassword] = useState("")
 	const [logMsg, setLogMsg] = useState("")
 	const [openHome, setOpenHome] = useState(false);
-	const [name, setName] = useState("");
+	const [id, setId] = useState("");
 	let history = useHistory();
 
 
 		useEffect(() => {
-			if(name.length < 1) {
+			if(id < 1) {
 				return;
 			}
-			console.log(name);
 			setOpenHome(true);
 			history.push("/login");
-		  }, [name]);
+		  }, [id]);
   
 	const handleLogin =()=> {
 		axios.post('http://localhost:8004/login', {
@@ -30,7 +29,7 @@ const Login=(props)=>
 		}).then(response=> {
 			props.updateLogMsg(response.data.status);
 			if(response.data.flag){
-				setName(response.data.id[0].FullName);
+				setId(response.data.id[0].ID);
 			
 			}
 		})
@@ -48,7 +47,7 @@ const Login=(props)=>
 		</inForm>
 		{openHome && <Redirect to={{
             pathname: '/home',
-            name: name
+            state: {id: id}
         }}/>}
 </div>
 

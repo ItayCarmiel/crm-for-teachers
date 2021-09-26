@@ -32,7 +32,7 @@ app.post('/signUp', function(req, res) {
     const password = req.body.password;
     const email = req.body.email;
     const phone = req.body.phone;
-    con.query(`SELECT ID FROM Accounts WHERE Email='${email}'`,function(err, result){
+    con.query(`SELECT ID FROM teachers WHERE Email='${email}'`,function(err, result){
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
@@ -43,7 +43,7 @@ app.post('/signUp', function(req, res) {
             res.json({status:"Mail already exist",flag:false});
         }
         else {
-            con.query(`insert into Accounts (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`, function (err, result) {
+            con.query(`insert into teachers (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`, function (err, result) {
                 if (err) {
                     res.status(400).json({status:"Something went wrong"});
                 }
@@ -60,7 +60,7 @@ app.post('/login', function(req, res) {
     const email = req.body.email;
     const password = req.body.password;
     
-    con.query(`SELECT * FROM Accounts WHERE Email='${email}' AND Password='${password}'`,function(err, result){
+    con.query(`SELECT * FROM teachers WHERE Email='${email}' AND Password='${password}'`,function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
         }
@@ -70,6 +70,17 @@ app.post('/login', function(req, res) {
             res.status(200).json({status: "Success!", id: result, flag:true});
         } else {
             res.status(200).json({status:"Wrong Mail or Password!", flag: false});
+        }
+    });
+});
+app.post('/schedule', function(req, res) {
+    const id = req.body.id;
+    con.query(`SELECT * FROM lessons INNER JOIN students ON lessons.TeacherId='${id}'`,function(err, result){
+        if (err) {
+            res.status(400).json({status:"Something went wrong"});
+        }
+        else {
+            res.status(200).json({details: result});
         }
     });
 });
