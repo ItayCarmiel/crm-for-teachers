@@ -32,28 +32,59 @@ app.post('/signUp', function(req, res) {
     const password = req.body.password;
     const email = req.body.email;
     const phone = req.body.phone;
-    con.query(`SELECT ID FROM Accounts WHERE Email='${email}'`,function(err, result){
+con.query(`SELECT ID FROM teachers WHERE Email='${email}'`,function(err, result){
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
-        if(result.length > 0){ // there is an email like this
+        else if(email.length < 1 || password.length < 1 || fullName.length < 1 || phone.length < 1 ){
+            res.status(200).json({status:"You must fill all fields",flag:false});
+        }
+        else if(result.length > 0){ // there is an email like this
             res.json({status:"Mail already exist",flag:false});
         }
         else {
-            con.query(`insert into Accounts (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`, function (err, result) {
+            con.query(`insert into teachers (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`, function (err, result) {
                 if (err) {
                     res.status(400).json({status:"Something went wrong"});
                 }
                 else{
-                    res.status(200).json({status:"Success! You can now LogIn",flag:true})
+                    res.status(200).json({status:"Success! You can now Login",flag:true})
                 }
             });
         }
     });
     
 });
- 
 
+app.post('/login', function(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+    
+    con.query(`SELECT * FROM teachers WHERE Email='${email}' AND Password='${password}'`,function(err, result){
+        if (err) {
+            res.status(400).json({status:"Something went wrong"});
+        }
+        else if(email.length < 1 || password.length < 1){
+            res.status(200).json({status:"You must fill both fields", flag: false});
+        } else if(result.length > 0){
+            res.status(200).json({status: "Success!", id: result, flag:true});
+        } else {
+            res.status(200).json({status:"Wrong Mail or Password!", flag: false});
+        }
+    });
+});
+app.post('/schedule', function(req, res) {
+    const id = req.body.id;
+    con.query(`SELECT * FROM lessons INNER JOIN students ON lessons.TeacherId='${id}'`,function(err, result){
+        if (err) {
+            res.status(400).json({status:"Something went wrong"});
+        }
+        else {
+            res.status(200).json({details: result});
+        }
+    });
+});
+ 
 
 app.listen(8004, () => {
   console.log(`Server running at http://localhost:8004/`);

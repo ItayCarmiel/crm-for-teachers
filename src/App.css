@@ -1,0 +1,119 @@
+.App {
+ 
+}
+p span {
+  display: block;
+  line-height: 2;
+}
+
+.head{
+    background-color: #d8564d;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+header{
+    padding-top: 0.5%;
+    font-size:xxx-large;
+}
+second{
+    font-size:large;
+    font-weight:lighter;
+  }
+message{
+  text-align: top;
+  font-size:x-large;
+  font-weight:lighter;
+  }
+.logPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: initial;
+    margin-top: 4%;
+    margin-left: 26%;
+    background-color: #d8564d;
+    border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+        0 10px 10px rgba(0,0,0,0.22);
+    position: inherit;
+    overflow: hidden;
+    width: 104vh;
+    height: 70vh;
+    max-width: 100%;
+}
+.login{
+  width: 50%;
+  height: 100%;
+  background-color: #d8564d;
+  text-align: center;
+  flex-direction: column;
+  font-weight: bold;
+  color: white;
+  font-size: xx-large;
+  padding-top:10%;
+  border-style:double;
+  border-left: #222;
+}
+
+.logform{
+  vertical-align: middle;
+  flex-direction: column;
+}
+input {
+  background-color: #eee;
+  border:#222;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 75%;
+}
+.signUp{
+  width: 50%;
+  height: 100%;
+  background-color: #d8564d;
+  text-align: center;
+  flex-direction: column;
+  font-weight: bold;
+  color: white;
+  font-size: x-large;
+  padding-top: 10%;
+}
+.signform{
+  margin-bottom: 10%;
+}
+button{
+  border-radius: 20px;
+  border: 1px solid #FF4B2B;
+  background-color: #FF4B2B;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #FFFFFF;
+}
+footer {
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    bottom: 0;
+    height: 25;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+  }
