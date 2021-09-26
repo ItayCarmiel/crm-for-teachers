@@ -26,6 +26,7 @@ const SignUp = (props) => {
 
 
   return (
+    
 			<div className="signform">
 				{signMsg}
         <input type="fullname" placeholder="FullName" onChange= {e=>{setFullname(e.target.value)}} />
