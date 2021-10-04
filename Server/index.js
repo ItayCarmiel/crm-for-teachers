@@ -32,18 +32,19 @@ app.post('/signUp', function(req, res) {
     const password = req.body.password;
     const email = req.body.email;
     const phone = req.body.phone;
-    con.query(`SELECT ID FROM teachers WHERE Email='${email}'`,function(err, result){
+    const title = req.body.title;
+    con.query(`SELECT ID FROM ?? WHERE Email='${email}'`,[title], function(err, result){
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
-        else if(email.length < 1 || password.length < 1 || fullName.length < 1 || phone.length < 1 ){
+        else if(email.length < 1 || password.length < 1 || fullName.length < 1 || phone.length < 1){
             res.status(200).json({status:"You must fill all fields",flag:false});
         }
         else if(result.length > 0){ // there is an email like this
             res.json({status:"Mail already exist",flag:false});
         }
         else {
-            con.query(`insert into teachers (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`, function (err, result) {
+            con.query(`insert into ?? (FullName, Password, Email, Phone) values ('${fullName}','${password}','${email}','${phone}')`,[title], function (err, result) {
                 if (err) {
                     res.status(400).json({status:"Something went wrong"});
                 }
@@ -52,15 +53,14 @@ app.post('/signUp', function(req, res) {
                 }
             });
         }
-    });
-    
+    });  
 });
 
 app.post('/login', function(req, res) {
     const email = req.body.email;
     const password = req.body.password;
-    
-    con.query(`SELECT * FROM teachers WHERE Email='${email}' AND Password='${password}'`,function(err, result){
+    const title = req.body.title;
+    con.query(`SELECT * FROM ?? WHERE Email='${email}' AND Password='${password}'`,[title], function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
         }

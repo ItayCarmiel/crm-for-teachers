@@ -3,11 +3,13 @@ import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom";	
 
 import axios from 'axios'
+import { colors } from '@material-ui/core';
 
 const Login=(props)=>
 {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+	const [title, setTitle] = useState("")
 	const [logMsg, setLogMsg] = useState("")
 	const [openHome, setOpenHome] = useState(false);
 	const [id, setId] = useState("");
@@ -23,9 +25,17 @@ const Login=(props)=>
 		  }, [id]);
   
 	const handleLogin =()=> {
+		if (title.length < 1){
+			document.getElementsByClassName("select")[0].style.borderColor="red";
+			document.getElementsByClassName("select")[0].style.borderStyle="dotted";
+		  }
+		else{
+			document.getElementsByClassName("select")[0].style.borderColor="#eee";
+			document.getElementsByClassName("select")[0].style.borderStyle="solid";
 		axios.post('http://localhost:8004/login', {
 			email:email,
 			password:password,
+			title:title
 		}).then(response=> {
 			props.updateLogMsg(response.data.status);
 			if(response.data.flag){
@@ -33,17 +43,21 @@ const Login=(props)=>
 			
 			}
 		})
-	  }
+	}}
 	
     return(
 <div className="logform">
 		<inForm action="#">
 			<input type="email" placeholder="Email" onChange= {e=>setEmail(e.target.value)} />
 			<input type="password" placeholder="Password" onChange= {e=>setPassword(e.target.value)} />
+			<select  className="select" onChange= {e=>setTitle(e.target.value)}>
+        	<option selected disabled>I'm a:</option>
+        	<option value="teachers">Teacher</option>
+        	<option value="students">Student</option>
+        </select> 
 			<button onClick={handleLogin}>
-			Sign In
+			Login
 			</button>
-			{logMsg}
 		</inForm>
 		{openHome && <Redirect to={{
             pathname: '/home',

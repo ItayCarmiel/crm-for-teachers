@@ -3,7 +3,9 @@
 }
 p span {
   display: block;
-  line-height: 2;
+  height: fit-content;
+  line-height: 1;
+  font-size:large;
 }
 
 .head{
@@ -16,13 +18,17 @@ header{
     padding-top: 0.5%;
     font-size:xxx-large;
 }
+logheader{
+  padding-top: 0.5%;
+  font-size:xx-large;
+}
 second{
     font-size:large;
     font-weight:lighter;
   }
 message{
   text-align: top;
-  font-size:x-large;
+  font-size:medium;
   font-weight:lighter;
   }
 .logPage{
@@ -30,7 +36,7 @@ message{
     justify-content: center;
     align-items: center;
     flex-direction: initial;
-    margin-top: 4%;
+    margin-top: 2.5%;
     margin-left: 26%;
     background-color: #d8564d;
     border-radius: 10px;
@@ -66,6 +72,12 @@ input {
   padding: 12px 15px;
   margin: 8px 0;
   width: 75%;
+  height: 8px;
+}
+select{
+  background: #eee;
+  border:#222;
+  width: 75%;
 }
 .signUp{
   width: 50%;
@@ -76,7 +88,7 @@ input {
   font-weight: bold;
   color: white;
   font-size: x-large;
-  padding-top: 10%;
+  padding-top: 0%;
 }
 .signform{
   margin-bottom: 10%;
