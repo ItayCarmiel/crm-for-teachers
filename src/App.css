@@ -117,6 +117,19 @@ button.ghost {
   background-color: transparent;
   border-color: #FFFFFF;
 }
+.logoutbutton{
+  margin-left: 39.3%;
+}
+.plusbutton{
+  margin-left: 40%;
+}
+.formbutton{
+  margin-left: 10%;
+}
+.closebutton{
+  width: 30%;
+  margin-right: 31%;
+}
 footer {
     background-color: #222;
     color: #fff;

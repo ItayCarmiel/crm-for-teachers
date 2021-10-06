@@ -1,7 +1,8 @@
  var mysql = require('mysql');
  const express = require('express');
-const app = express();
-  
+const app = express(); 
+var jwt = require("jsonwebtoken");
+require("dotenv").config();
 var con = mysql.createConnection({
   host: "localhost",
   user:"root",
@@ -33,7 +34,7 @@ app.post('/signUp', function(req, res) {
     const email = req.body.email;
     const phone = req.body.phone;
     const title = req.body.title;
-    con.query(`SELECT ID FROM ?? WHERE Email='${email}'`,[title], function(err, result){
+    con.query(`SELECT * FROM ?? WHERE Email='${email}'`,[title], function(err, result){
         if(err){
             res.status(400).json({status:"Something went wrong"})
         }
@@ -49,7 +50,7 @@ app.post('/signUp', function(req, res) {
                     res.status(400).json({status:"Something went wrong"});
                 }
                 else{
-                    res.status(200).json({status:"Success! You can now Login",flag:true})
+                    res.status(200).json({status:"Success! You can now Login",flag:true});
                 }
             });
         }
@@ -73,9 +74,9 @@ app.post('/login', function(req, res) {
         }
     });
 });
-app.post('/schedule', function(req, res) {
+app.post('/teacherSchedule', function(req, res) {
     const id = req.body.id;
-    con.query(`SELECT * FROM lessons INNER JOIN students ON lessons.TeacherId='${id}'`,function(err, result){
+    con.query(`SELECT DISTINCT * FROM lessons WHERE lessons.TeacherId='${id}'`,function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
         }
@@ -84,14 +85,66 @@ app.post('/schedule', function(req, res) {
         }
     });
 });
+app.post('/studentSchedule', function(req, res) {
+    const id = req.body.id;
+    con.query(`SELECT DISTINCT * FROM lessons INNER JOIN teachers ON lessons.TeacherId=teachers.TeacherId WHERE lessons.StudentId='${id}'`,function(err, result){
+        if (err) {
+            res.status(400).json({status:"Something went wrong"});
+        }
+        else {
+            res.status(200).json({details: result});
+        }
+    });
+});
+
+app.post('/jwtVerify', function(req, res) {
+    const token = req.body.token;
+        try {
+            var id = jwt.verify(token,"" + process.env.JWT_KEY);
+            res.status(200).json({details: id, flag: true});
+        }
+        catch{
+            res.status(400).json({flag:false});
+        }
+    });
  
+app.post('/jwtSign', function(req, res) {
+        const id = req.body.id;
+        const title = req.body.title;
+            try {
+                token = jwt.sign(
+					{ user_id: id,
+					title: title},
+					"" + process.env.JWT_KEY,
+					{
+						expiresIn: "2h",
+					}
+					);
+                res.status(200).json({details: token, flag: true});
+            }
+            catch{
+                res.status(400).json({flag:false});
+            }
+        });
+
+app.post('/addLesson', function(req, res) {
+    const teacherId = req.body.teacherId;
+    const dateTime = req.body.dateTime;
+    const location = req.body.location;
+    con.query(`insert into lessons (TeacherId, date_time, isOnline) values ('${teacherId}','${dateTime}','${location}')`, function (err, result) {
+        if (err) {
+            res.status(400).json({flag: false});
+        }
+        else{
+            res.status(200).json({details: result, flag: true});  
+        }
+    }); 
+    });
 
 
 app.listen(8004, () => {
   console.log(`Server running at http://localhost:8004/`);
 });
-
-
 
 
 

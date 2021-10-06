@@ -1,6 +1,8 @@
 import './App.css';
 import Controller from './components/controller';
+import React, { useState,useEffect } from 'react';
 import Home from './components/home';
+import axios from 'axios'
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,6 +11,26 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [isConnect, setIsConnect] = useState()
+  const [id, setId] = useState("")
+	const [title, setTitle] = useState("")
+
+    useEffect(() => {
+    var token = localStorage.getItem("token");
+    if(token){
+    axios.post('http://localhost:8004/jwtVerify', {
+    token
+    }).then(response=> {
+      if(response.data.flag){
+        setId(response.data.details.user_id);
+        setTitle(response.data.details.title);
+        setIsConnect("true");
+        }
+        else setIsConnect("false");
+      })
+    } else setIsConnect("false");
+  },[]);
+
   return (
 <div>
     {/* <Controller /> */}
@@ -18,14 +40,21 @@ function App() {
                 exact
                 path="/"
                 render={() => {
-                    return (
-                      //this.state.isUserAuthenticated ?
-                      <Redirect to="/login" /> 
-                    )
-                }}
+                  if(!isConnect){
+                    return('loading...');
+                  }
+                  if(isConnect == "true"){
+                    setIsConnect(false);
+                    return( <Redirect to={{
+                      pathname: '/home',
+                      state: {id: id, title: title}
+                    }}/> )
+                  }
+                  else {return  (<Redirect to="/login"/>) }              
+                 }}  
               />
-               <Route exact path="/login" component={Controller} />
-               <Route exact path="/home" component={Home} />
+               <Route path="/login" component={Controller} />
+               <Route path="/home"  component={Home} />
             </Switch>
      </Router>
   </div>

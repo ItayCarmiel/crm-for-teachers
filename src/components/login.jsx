@@ -1,9 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom";	
-
+import TableNameId from '../constants'
 import axios from 'axios'
 import { colors } from '@material-ui/core';
+require("dotenv").config();
+var jwt = require("jsonwebtoken");
 
 const Login=(props)=>
 {
@@ -14,6 +17,7 @@ const Login=(props)=>
 	const [openHome, setOpenHome] = useState(false);
 	const [id, setId] = useState("");
 	let history = useHistory();
+	var token;
 
 
 		useEffect(() => {
@@ -39,8 +43,16 @@ const Login=(props)=>
 		}).then(response=> {
 			props.updateLogMsg(response.data.status);
 			if(response.data.flag){
-				setId(response.data.id[0].ID);
-			
+				const test = TableNameId[title];
+				const tempId = response.data.id[0][test];
+				axios.post('http://localhost:8004/jwtSign', {
+					id: response.data.id[0][test],
+					title: title
+				}).then(response=> {
+					if(response.data.flag){
+				localStorage.setItem("token", response.data.details);
+				setId(tempId);
+			}})
 			}
 		})
 	}}
@@ -61,7 +73,7 @@ const Login=(props)=>
 		</inForm>
 		{openHome && <Redirect to={{
             pathname: '/home',
-            state: {id: id}
+            state: {id: id, title: title}
         }}/>}
 </div>
 
