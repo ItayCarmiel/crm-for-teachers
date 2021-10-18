@@ -18,6 +18,7 @@ const customStyles = {
   const LessonModal=(props)=>
   {
     const [teacherId, setTeacherId] = useState();
+    const [teacherName, setTeacherName] = useState("");
     const [dateTime, setDateTime] = useState ("");
     const [location, setLocation] = useState();
     var isTeacher = false;
@@ -34,8 +35,10 @@ const customStyles = {
       const handleSubmit =()=> {
         if(dateTime && location){
           setTeacherId(props.id);
+          setTeacherName(props.name);
         axios.post('http://localhost:8004/addLesson', {
           teacherId: props.id,
+          teacherName: props.name,
           dateTime,
           location,
         }).then(response=> {

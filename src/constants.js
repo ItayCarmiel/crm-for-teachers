@@ -1,9 +1,9 @@
 import { Table } from "@material-ui/core";
 
-const TableNameId = {
-    "students": "StudentId",
-    "teachers": "TeacherId"
+const TableName = {
+    "students": ["StudentId","TeacherName"],
+    "teachers": ["TeacherId","StudentName"]
 }
 
-export default TableNameId;
+export default TableName;
 

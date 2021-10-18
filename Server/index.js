@@ -76,7 +76,7 @@ app.post('/login', function(req, res) {
 });
 app.post('/teacherSchedule', function(req, res) {
     const id = req.body.id;
-    con.query(`SELECT DISTINCT * FROM lessons WHERE lessons.TeacherId='${id}'`,function(err, result){
+    con.query(`SELECT DISTINCT * FROM lessons  WHERE lessons.TeacherId='${id}'`,function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
         }
@@ -85,9 +85,10 @@ app.post('/teacherSchedule', function(req, res) {
         }
     });
 });
+
 app.post('/studentSchedule', function(req, res) {
     const id = req.body.id;
-    con.query(`SELECT DISTINCT * FROM lessons INNER JOIN teachers ON lessons.TeacherId=teachers.TeacherId WHERE lessons.StudentId='${id}'`,function(err, result){
+    con.query(`SELECT * FROM lessons WHERE lessons.StudentId='${id}'`,function(err, result){
         if (err) {
             res.status(400).json({status:"Something went wrong"});
         }
@@ -129,9 +130,10 @@ app.post('/jwtSign', function(req, res) {
 
 app.post('/addLesson', function(req, res) {
     const teacherId = req.body.teacherId;
+    const teacherName = req.body.teacherName;
     const dateTime = req.body.dateTime;
     const location = req.body.location;
-    con.query(`insert into lessons (TeacherId, date_time, isOnline) values ('${teacherId}','${dateTime}','${location}')`, function (err, result) {
+    con.query(`insert into lessons (TeacherId, TeacherName, date_time, isOnline) values ('${teacherId}','${teacherName}','${dateTime}','${location}')`, function (err, result) {
         if (err) {
             res.status(400).json({flag: false});
         }

@@ -24,11 +24,11 @@ function App() {
       if(response.data.flag){
         setId(response.data.details.user_id);
         setTitle(response.data.details.title);
-        setIsConnect("true");
+        setIsConnect(true);
         }
-        else setIsConnect("false");
+        else setIsConnect(false);
       })
-    } else setIsConnect("false");
+    } else setIsConnect(false);
   },[]);
 
   return (
@@ -41,16 +41,16 @@ function App() {
                 path="/"
                 render={() => {
                   if(!isConnect){
-                    return('loading...');
+                    return(<p>Click <a href="/login">here</a> to Login</p>);
                   }
-                  if(isConnect == "true"){
+                  if(isConnect){
                     setIsConnect(false);
                     return( <Redirect to={{
                       pathname: '/home',
                       state: {id: id, title: title}
                     }}/> )
                   }
-                  else {return  (<Redirect to="/login"/>) }              
+                  return (<Redirect to="/login"/>)            
                  }}  
               />
                <Route path="/login" component={Controller} />

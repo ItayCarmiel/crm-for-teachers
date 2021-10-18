@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom";	
-import TableNameId from '../constants'
+import Table from '../constants'
 import axios from 'axios'
 import { colors } from '@material-ui/core';
 require("dotenv").config();
@@ -16,6 +16,7 @@ const Login=(props)=>
 	const [logMsg, setLogMsg] = useState("")
 	const [openHome, setOpenHome] = useState(false);
 	const [id, setId] = useState("");
+	const [name, setName] = useState("");
 	let history = useHistory();
 	var token;
 
@@ -43,15 +44,17 @@ const Login=(props)=>
 		}).then(response=> {
 			props.updateLogMsg(response.data.status);
 			if(response.data.flag){
-				const test = TableNameId[title];
-				const tempId = response.data.id[0][test];
+				const testId = Table[title][0];
+				const tempId = response.data.id[0][testId];
+				const tempName = response.data.id[0]["FullName"];
 				axios.post('http://localhost:8004/jwtSign', {
-					id: response.data.id[0][test],
+					id: response.data.id[0][testId],
 					title: title
 				}).then(response=> {
 					if(response.data.flag){
 				localStorage.setItem("token", response.data.details);
 				setId(tempId);
+				setName(tempName);
 			}})
 			}
 		})
@@ -73,7 +76,7 @@ const Login=(props)=>
 		</inForm>
 		{openHome && <Redirect to={{
             pathname: '/home',
-            state: {id: id, title: title}
+            state: {id: id, name:name, title: title}
         }}/>}
 </div>
 
